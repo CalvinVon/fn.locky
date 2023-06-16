@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "CommonJS",
     "target": "ES5",
     "lib": ["ES2015"],
     "useDefineForClassFields": true,
@@ -9,7 +9,7 @@
     "moduleResolution": "node",
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "./es",
+    "outDir": "./lib",
     "downlevelIteration": true
   },
   "include": [

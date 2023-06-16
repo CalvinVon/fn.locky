@@ -1,5 +1,6 @@
 node_modules/
-libs/
+es/
+lib/
 dist/
 
 coverage/

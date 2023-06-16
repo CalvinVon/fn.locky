@@ -1,23 +1,23 @@
 {
   "name": "fn.locky",
   "version": "0.0.0-alpha.0",
-  "description": "Asynchronous function locks to avoid concurrent calls",
-  "type": "module",
+  "description": "Lock utils for asynchronous function to avoid concurrent calls",
   "scripts": {
-    "build:lib": "tsc",
+    "build:es": "tsc",
+    "build:lib": "tsc -p tsconfig.lib.json",
     "build:dist": "rollup --config",
     "test": "jest"
   },
+  "sideEffects": false,
+  "type": "module",
+  "main": "./lib/index.js",
   "exports": {
-    "default": "./libs/index.js",
-    "import": "./libs/index.js",
-    "require": "./dist/fn-lock.min.js",
-    "types": "./libs/index.d.ts",
-    "lockify": "./libs/lockify.js",
-    "package.json": "./package.json"
+    ".": "./es/index.js",
+    "./lockify": "./es/lockify.js"
   },
   "files": [
-    "./libs",
+    "./es",
+    "./lib",
     "./dist"
   ],
   "dependencies": {
@@ -43,7 +43,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/CalvinVon/fn-lock/issues"
   },

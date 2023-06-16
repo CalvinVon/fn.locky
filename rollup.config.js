@@ -19,11 +19,6 @@ export default {
     typescript({
       noEmit: true,
       declaration: false,
-      compilerOptions: {
-        target: "es5",
-      },
-      lib: ["ES2015"],
-      downlevelIteration: true
     }),
     terser()
   ],

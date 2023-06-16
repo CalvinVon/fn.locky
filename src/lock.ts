@@ -49,7 +49,7 @@ export default abstract class Lock {
  *    lock.unlock();
  *    ```
  */
-export class AsyncLock<T> extends Lock {
+class AsyncLock<T> extends Lock {
   pending?: Promise<T>;
   private _resolve?: (params?: any) => void;
   private _reject?: (params?: any) => void;
@@ -100,3 +100,7 @@ export class AsyncLock<T> extends Lock {
   }
 }
 
+export {
+  Lock,
+  AsyncLock
+}
