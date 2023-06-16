@@ -11,7 +11,10 @@
   "exports": {
     "default": "./libs/index.js",
     "import": "./libs/index.js",
-    "types": "./libs/index.d.ts"
+    "require": "./dist/fn-lock.min.js",
+    "types": "./libs/index.d.ts",
+    "lockify": "./libs/lockify.js",
+    "package.json": "./package.json"
   },
   "files": [
     "./libs",

@@ -22,6 +22,8 @@ export default {
       compilerOptions: {
         target: "es5",
       },
+      lib: ["ES2015"],
+      downlevelIteration: true
     }),
     terser()
   ],

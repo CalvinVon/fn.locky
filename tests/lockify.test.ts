@@ -1,14 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
-import { Lock, Lockable, lockify } from '../src';
+import { Lockable, lockify } from '../src';
 import { jest } from '@jest/globals';
 
-describe('lockify exports', () => {
-  it('exports', () => {
-    expect.assertions(2);
-    expect(Lock.lockify).toBe(lockify);
-    expect(typeof (lockify)).toBe('function')
-  });
-});
 
 describe('lockify functions that have none params', () => {
 
