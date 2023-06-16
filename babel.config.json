@@ -1,0 +1,44 @@
+{
+  "env": {
+    "es": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": false,
+            "targets": {
+              "esmodules": true,
+              "node": "current"
+            }
+          }
+        ],
+        "@babel/preset-typescript"
+      ]
+    },
+    "lib": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": "commonjs",
+            "targets": {}
+          }
+        ],
+        "@babel/preset-typescript"
+      ]
+    },
+    "test": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ],
+        "@babel/preset-typescript"
+      ]
+    }
+  }
+}

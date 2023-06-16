@@ -5,11 +5,12 @@
     "lib": ["ES2015"],
     "useDefineForClassFields": true,
     "declaration": true,
+    "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "./es",
+    "outDir": "./types",
     "downlevelIteration": true
   },
   "include": [

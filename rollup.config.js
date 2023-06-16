@@ -17,7 +17,6 @@ export default {
     resolve(),
     commonjs(),
     typescript({
-      noEmit: true,
       declaration: false,
     }),
     terser()

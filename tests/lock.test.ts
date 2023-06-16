@@ -2,7 +2,7 @@ import { it } from "@jest/globals";
 import { describe } from "@jest/globals";
 import { Lock } from "../src";
 import { expect } from "@jest/globals";
-import { AsyncLock } from "../src/lock";
+import { AsyncLock } from "../src";
 import { jest } from "@jest/globals";
 import { beforeEach } from "@jest/globals";
 
