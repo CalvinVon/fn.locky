@@ -1,5 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { Lock, Lockable, lockify } from '../src';
+import { jest } from '@jest/globals';
 
 describe('lockify exports', () => {
   it('exports', () => {
@@ -134,16 +135,92 @@ describe('lockify functions that have some params', () => {
 
 
   describe('multiple calls', () => {
-    it('equal parameters should reuse same lock', () => {
+    it('equal parameters should reuse same lock', async () => {
       let count = 0;
       const fn = lockify((a: {}, b: number) => {
         return new Promise(resolve => {
           setTimeout(() => {
             count++;
-            resolve({ success: true });
+            resolve({ success: true, count });
           }, 10);
         })
       });
+
+      expect.assertions(3);
+
+      await Promise.all([
+        expect(fn({ same: 'object' }, 1)).resolves.toEqual({
+          success: true, count: 1
+        }),
+        expect(fn({ same: 'object' }, 1)).resolves.toEqual({
+          success: true, count: 1
+        })
+      ])
+      expect(count).toBe(1);
+    });
+
+    it('different parameters should not reuse same lock', async () => {
+      let count = 0;
+      const mockFn = jest.fn((a: {}, b: number) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            count++;
+            resolve({ success: true, count });
+          }, 10);
+        })
+      });
+      const fn = lockify(mockFn);
+
+      expect.assertions(6);
+
+      await Promise.all([
+        expect(fn({ same: 'object' }, 1)).resolves.toEqual({
+          success: true, count: 1
+        }),
+        expect(fn({ same: 'object' }, 2)).resolves.toEqual({
+          success: true, count: 2
+        }),
+        expect(fn({ same: 'object' }, 1)).resolves.toEqual({
+          success: true, count: 1
+        }),
+        expect(fn({ same: 'object' }, 3)).resolves.toEqual({
+          success: true, count: 3
+        })
+      ])
+      expect(count).toBe(3);
+      expect(mockFn).toBeCalledTimes(3);
+    });
+
+    it('pass `useParams` to use lock map', async () => {
+      let count = 0;
+      const mockFn = jest.fn((...args: any[]) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            count++;
+            resolve({ success: true, count });
+          }, 10);
+        })
+      });
+      const fn = lockify(mockFn, true);
+
+      expect.assertions(6);
+
+      await Promise.all([
+        expect(fn({ same: 'object' }, 1)).resolves.toEqual({
+          success: true, count: 1
+        }),
+        expect(fn({ same: 'object' }, 2)).resolves.toEqual({
+          success: true, count: 2
+        }),
+        expect(fn({ same: 'object' }, 1)).resolves.toEqual({
+          success: true, count: 1
+        }),
+        expect(fn({ same: 'object' }, 3)).resolves.toEqual({
+          success: true, count: 3
+        })
+      ])
+      expect(count).toBe(3);
+      expect(mockFn).toBeCalledTimes(3);
     });
   });
 });

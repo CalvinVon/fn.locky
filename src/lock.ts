@@ -106,14 +106,18 @@ export class AsyncLock<T> extends Lock {
 }
 
 /**
- * Automatically lockify function
+ * Convert a lockable function to a lockable function, automatically locking and unlocking
  * 
- * Convert a lockable function to a lockable function
+ * @param lockable A lockable function should return a `Promise`. 
+ * @param useParams Manually specify whether the `lockable` function has certain parameters list.
  * 
- * @param useParams manually specify the lockable has parameters
+ * **NOTE**:
+ * - We assume that the lockable function should be a pure function(fn(x) always
+ * return y, what means the function has no side effects), so the other waiting
+ * calls would immediately return the same result when unlocking instead of re-calling
+ * the original `lockable` function.
  * 
- * *NOTE*:
- * lockify not support `lockable` functions that use `arguments` object inside
+ * - lockify not support `lockable` functions that use `arguments` object inside
  * or something like `rest parameter`. Cause we cannot tell whether the function
  * has parmaters list or not. In this case, you should pass another parameter 
  * `useParams` manually
@@ -152,7 +156,7 @@ export function lockify<T, P extends any[] = []>(lockable: Lockable<T, P>, usePa
       for (let [lock, lockArgs] of locksMap!.entries()) {
         // if the first parameter is equal
         // do compare the rests
-        if (isEqual(lockArgs[0], args[0])) {
+        if (lockArgs.length === args.length && isEqual(lockArgs[0], args[0])) {
           let isEqualFlag = true;
 
           for (let i = 1; i < args.length; i++) {
