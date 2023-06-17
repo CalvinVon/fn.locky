@@ -5,6 +5,7 @@
   "scripts": {
     "check": "tsc",
     "prebuild": "npm run check && npm run test",
+    "ci": "npm i -g pnpm && pnpm i",
     "build": "npm run build:es && npm run build:lib && npm run build:dist",
     "build:es": "babel src -d es --env-name es --extensions .ts",
     "build:lib": "babel src -d lib --env-name lib --extensions .ts",
