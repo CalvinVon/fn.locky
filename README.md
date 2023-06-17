@@ -2,11 +2,17 @@
 
 Lock utils for asynchronous function to **avoid concurrent calls**.
 
+[![npm](https://img.shields.io/npm/v/fn.locky)](https://www.npmjs.com/package/fn.locky)
+![npm](https://img.shields.io/npm/dt/fn.locky)
+![Codecov](https://img.shields.io/codecov/c/github/CalvinVon/fn.locky)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/fn.locky)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/CalvinVon/fn.locky/node.js.yml)
+
 - ✨ Written in **TypeScript**
 - ✨ Lock/unlock **automatically**
 - ✨ **100%** **Tests** coverage
 - ✨ Support **Tree-Shaking**
-- ✨ **732 B / 5.4 KB** gzip *([subpath import](#subpath-import))*
+- ✨ **732 B + 5.4 KB** gzip *([subpath import](#subpath-import))*
 
 ## Install
 
