@@ -1,11 +1,12 @@
 # fn.locky
 
-Lock utils for asynchronous function to avoid concurrent calls.
+Lock utils for asynchronous function to **avoid concurrent calls**.
 
 - ✨ Written in **TypeScript**
-- ✨ Locking and unlocking **automatically**
+- ✨ Lock/unlock **automatically**
 - ✨ **100%** **Tests** coverage
-- ✨ **5.2 kb** gzip
+- ✨ Support **Tree-Shaking**
+- ✨ **732 B / 5.4 KB** gzip *([subpath import](#subpath-import))*
 
 ## Install
 
@@ -14,6 +15,11 @@ npm i fn.locky -S
 ```
 
 ## Usage
+
+This package contains two useful tools:
+
+- **AsyncLock**: A semantic encapsulation based on `Promise`, controls the function execution flow manually.
+- **lockify**: A higher-order function, for adding lock protection to the functions, fully automatic locking and unlocking
 
 ### Basic usage
 
@@ -46,27 +52,53 @@ lock.unlock(); // log 'done'
 
 **`lockify`**
 
-Convert a lockable function to a lockified function, locking and unlocking automatically.
+Convert a `lockable` function to a `lockified` function, manage locking and unlocking **automatically**.
+
+> Yep, we do distinguish between different function parameters, see these test cases for details
 
 ```ts
 import { lockify } from "fn.locky";
 
 let count = 0;
-const asyncFn = () =>
+const asyncFn = (param1, param2) =>
   new Promise((resolve) => {
     // mock request
     setTimeout(() => {
-      resolve({ success: true, count: count++ });
-    });
+      // do something with param1 and param2
+      resolve({ success: true, count: count++ }); // auto unlock the (inner) lock
+    }, 1000);
   });
 
 const lockified = lockify(asyncFn);
+
+// concurrent calls
 const result_1 = lockified();
 const result_2 = lockified();
 const result_3 = lockified();
-// ... more calls
 
+// after first call resolves:
 // count: 1
-// count only add once
 // result_1, result_2, result_3: { success: true, count: 1 }
+```
+
+> **NOTICE**:
+>
+> - We assume that the lockable function should be a pure function( fn(x) always
+return y, what means the function has no side effects ), so the other waiting
+calls would return the same result immediately when unlocking instead of re-calling
+the original `lockable` function.
+> - lockify not support `lockable` functions that use `arguments` object inside
+or something like `rest parameter`. Cause we cannot tell whether the function
+has parmaters list or not. In this case, you should pass another parameter
+`useParams` manually
+
+### subpath-import
+
+You can only import `Lock` class, it only costs **732 B** !
+
+> **Additions**: You may set `moduleResolution` field to `node16`/`nodenext` in your `tsconfig.json`, see [here](https://www.typescriptlang.org/tsconfig#moduleResolution).
+
+```ts
+import { Lock, AsyncLock } from "fn.locky/lock";
+import { lockify } from "fn.locky/lockify";
 ```

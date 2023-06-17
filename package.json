@@ -1,6 +1,6 @@
 {
   "name": "fn.locky",
-  "version": "0.0.0-alpha.0",
+  "version": "1.0.0-beta",
   "description": "Lock utils for asynchronous function to avoid concurrent calls",
   "scripts": {
     "check": "tsc",
@@ -13,20 +13,33 @@
     "clean": "rm -rf types/ es/ lib/ dist/"
   },
   "sideEffects": false,
-  "type": "module",
-  "main": "./lib/index.js",
+  "main": "./dist/fn-locky.min.js",
   "types": "./types/index.d.ts",
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./lib/index.js"
+      "require": "./lib/index.js",
+      "default": "./dist/fn-locky.min.js",
+      "types": "./types/index.d.ts"
     },
-    "./lockify": "./es/lockify.js"
+    "./lockify": {
+      "import": "./es/lockify.js",
+      "require": "./lib/lockify.js",
+      "default": "./dist/lockify.min.js",
+      "types": "./types/lockify.d.ts"
+    },
+    "./lock": {
+      "import": "./es/lock.js",
+      "require": "./lib/lock.js",
+      "default": "./dist/lock.min.js",
+      "types": "./types/lock.d.ts"
+    }
   },
   "files": [
     "./es",
     "./lib",
-    "./dist"
+    "./dist",
+    "./types"
   ],
   "dependencies": {
     "lodash.isequal": "^4.5.0"

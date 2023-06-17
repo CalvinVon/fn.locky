@@ -18,7 +18,7 @@
  *    lock.unlock();
  *    ```
  */
-export default abstract class Lock {
+abstract class Lock {
   static createAsyncLock() {
     return new AsyncLock();
   }

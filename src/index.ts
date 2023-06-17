@@ -1,3 +1,3 @@
-export { default as Lock, AsyncLock } from "./lock";
+export { Lock as default, AsyncLock } from "./lock";
 export { lockify } from "./lockify";
-export type { Lockable, Lockified } from "./types";
+export type * from "./types";
