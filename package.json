@@ -1,6 +1,6 @@
 {
   "name": "fn.locky",
-  "version": "1.0.0-beta",
+  "version": "1.0.0",
   "description": "Lock utils for asynchronous function to avoid concurrent calls",
   "scripts": {
     "check": "tsc",
